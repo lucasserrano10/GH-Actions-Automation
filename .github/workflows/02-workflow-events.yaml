@@ -1,10 +1,19 @@
 name: 02 - Workflow Events
 
-on: push
+on: 
+  push:
+  schedule:
+        - cron: '*/5 * * * *'
 
 jobs:
     echo:
         runs-on: ubuntu-latest
         steps:
             - name: Show the trigger
-              run: echo "push is the name of the trigger"
+              run: echo "${{github.event_name}} is the name of the trigger"
+    echo-scheduled:
+        if: github.event_name == 'schedule'
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show the trigger
+              run: echo "${{github.event_name}} is the name of the trigger"
